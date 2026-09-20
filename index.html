@@ -5,30 +5,104 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>George K. Thiruvathukal — Talks</title>
 <style>
-	:root { color-scheme: light dark; }
+	:root {
+		color-scheme: light dark;
+		--bg:      #f5f4f1;
+		--ink:     #1c1c1c;
+		--muted:   #6b6b6b;
+		--card-bg: #ffffff;
+		--border:  #e1ded7;
+		--shadow:  0 1px 2px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06);
+		--shadow-hover: 0 2px 4px rgba(0,0,0,0.06), 0 16px 32px rgba(0,0,0,0.10);
+		--accent:  #b8862f;
+	}
+	@media (prefers-color-scheme: dark) {
+		:root {
+			--bg:      #14161a;
+			--ink:     #e8e6e1;
+			--muted:   #93999f;
+			--card-bg: #1c1f24;
+			--border:  #2a2e34;
+			--shadow:  0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.4);
+			--shadow-hover: 0 2px 4px rgba(0,0,0,0.35), 0 16px 32px rgba(0,0,0,0.5);
+			--accent:  #d9a441;
+		}
+	}
+	* { box-sizing: border-box; }
 	body {
 		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-		max-width: 40em;
-		margin: 4em auto;
-		padding: 0 1.5em;
+		background: var(--bg);
+		color: var(--ink);
+		max-width: 56em;
+		margin: 0 auto;
+		padding: 4em 1.5em 6em;
 		line-height: 1.5;
 	}
-	h1 { font-size: 1.4em; }
-	ul { padding-left: 1.2em; }
-	li { margin: 0.6em 0; }
-	.date { color: #888; font-size: 0.9em; }
+	header { margin-bottom: 2.5em; }
+	h1 { font-size: 1.6em; margin: 0 0 0.2em; }
+	.subtitle { color: var(--muted); font-size: 0.95em; }
+	.cards {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+		gap: 1.25em;
+	}
+	.card {
+		display: flex;
+		flex-direction: column;
+		gap: 0.6em;
+		background: var(--card-bg);
+		border: 1px solid var(--border);
+		border-radius: 14px;
+		padding: 1.5em;
+		text-decoration: none;
+		color: inherit;
+		box-shadow: var(--shadow);
+		transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+	}
+	.card:hover, .card:focus-visible {
+		transform: translateY(-3px);
+		box-shadow: var(--shadow-hover);
+		border-color: var(--accent);
+	}
+	.card__year {
+		font-size: 0.75em;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: var(--accent);
+	}
+	.card__title {
+		font-size: 1.15em;
+		font-weight: 600;
+		line-height: 1.3;
+	}
+	.card__desc {
+		font-size: 0.9em;
+		color: var(--muted);
+		flex-grow: 1;
+	}
+	.card__cta {
+		font-size: 0.85em;
+		font-weight: 600;
+		color: var(--accent);
+	}
 </style>
 </head>
 <body>
 
-<h1>Talks</h1>
+<header>
+	<h1>Talks</h1>
+	<div class="subtitle">George K. Thiruvathukal</div>
+</header>
 
-<ul>
-<li>
-	<a href="luc-digital-ethics-2026/">We Have Already Had Our Singularity</a>
-	<div class="date">Digital ethics, deep history, and the case for human judgment — 2026</div>
-</li>
-</ul>
+<div class="cards">
+	<a class="card" href="luc-digital-ethics-2026/">
+		<span class="card__year">2026</span>
+		<span class="card__title">We Have Already Had Our Singularity</span>
+		<span class="card__desc">Digital ethics, deep history, and the case for human judgment.</span>
+		<span class="card__cta">View talk →</span>
+	</a>
+</div>
 
 </body>
 </html>
