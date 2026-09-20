@@ -3,7 +3,11 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<title>We Have Already Had Our Singularity</title>
+	<title>From Disruption to Agency: AI, Computing Cultures, and the Future of Digital Ethics</title>
+
+	<!-- Shared light/dark toggle (talks.gkt.sh/theme.js) — loaded early, before the reveal
+	     stylesheets, so the saved/system theme is applied before first paint. -->
+	<script src="../theme.js"></script>
 
 	<!-- reveal.js — vendored locally (talks/2026-digital-ethics-singularity/reveal/) so the deck is
 	     fully self-contained: nothing is fetched from the network at present time. -->
@@ -11,12 +15,59 @@
 	<link rel="stylesheet" href="reveal/dist/theme/black.css" id="theme">
 
 	<style>
+		/* Dark is the deck's native palette; :root carries it unconditionally so every
+		   color has a real definition outside a media/data-theme block (see the light
+		   override below, which is what actually gets guarded). */
 		:root {
-			--accent:  #d9a441; /* warm amber — headings */
-			--accent2: #8fb996; /* soft sage — lead / emphasis */
-			--panel:   #0b0e12;
-			--ink:     #e6e1d6;
+			--accent:      #d9a441; /* warm amber — headings */
+			--accent2:     #8fb996; /* soft sage — lead / emphasis */
+			--bg:          #14161a;
+			--ink:         #e6e1d6;
+			--strong:      #ffffff;
+			--muted:       #9aa4b0;
+			--border-soft: #2c3a49;
+			--border-img:  #1c2530;
+			--img-bg:      #05070a;
+			--img-shadow:  rgba(0,0,0,0.6);
+			--blockquote-bg: rgba(217,164,65,0.08);
+			--r-background-color: var(--bg);
+			--r-main-color: var(--ink);
+			--r-link-color: #42affa;
+			--r-link-color-hover: #8dcffc;
 		}
+		@media (prefers-color-scheme: light) {
+			:root:not([data-theme="dark"]) {
+				--accent:      #b8862f;
+				--accent2:     #3f7a52;
+				--bg:          #f5f4f1;
+				--ink:         #1c1c1c;
+				--strong:      #000000;
+				--muted:       #6b6b6b;
+				--border-soft: #e1ded7;
+				--border-img:  #e1ded7;
+				--img-bg:      #f0ede6;
+				--img-shadow:  rgba(0,0,0,0.15);
+				--blockquote-bg: rgba(184,134,47,0.12);
+				--r-link-color: #1a63b8;
+				--r-link-color-hover: #4a8fd1;
+			}
+		}
+		:root[data-theme="light"] {
+			--accent:      #b8862f;
+			--accent2:     #3f7a52;
+			--bg:          #f5f4f1;
+			--ink:         #1c1c1c;
+			--strong:      #000000;
+			--muted:       #6b6b6b;
+			--border-soft: #e1ded7;
+			--border-img:  #e1ded7;
+			--img-bg:      #f0ede6;
+			--img-shadow:  rgba(0,0,0,0.15);
+			--blockquote-bg: rgba(184,134,47,0.12);
+			--r-link-color: #1a63b8;
+			--r-link-color-hover: #4a8fd1;
+		}
+		body { background: var(--bg); }
 		.reveal              { font-size: 30px; color: var(--ink); }
 		.reveal .slides section { text-align: left; }
 		.reveal h1, .reveal h2, .reveal h3 { color: var(--accent); text-transform: none; letter-spacing: normal; }
@@ -25,32 +76,59 @@
 		.reveal section.title, .reveal section.center { text-align: center; }
 		.reveal .lead  { color: var(--accent2); }
 		.reveal em     { color: var(--accent2); font-style: normal; }
-		.reveal strong { color: #ffffff; }
+		.reveal strong { color: var(--strong); }
 		.reveal .authors { font-size: 0.8em; color: var(--ink); }
-		.reveal .affil   { font-size: 0.7em; color: #9aa4b0; }
+		.reveal .affil   { font-size: 0.7em; color: var(--muted); }
+		.reveal .affil a { color: inherit; text-decoration: underline; text-decoration-color: var(--border-soft); }
+		.reveal .affil a:hover { color: var(--accent); text-decoration-color: var(--accent); }
 		.reveal .small { font-size: 0.72em; }
-		.reveal .note-inline { color: #9aa4b0; font-size: 0.68em; }
+		.reveal .note-inline { color: var(--muted); font-size: 0.68em; }
 		.reveal .chapter-tag {
-			font-size: 0.56em; color: #7f8b98; margin-top: 0.9em;
-			border-top: 1px solid #2c3a49; padding-top: 0.4em;
+			font-size: 0.56em; color: var(--muted); margin-top: 0.9em;
+			border-top: 1px solid var(--border-soft); padding-top: 0.4em;
 		}
-		.reveal .chapter-tag a { color: #7f8b98; }
+		.reveal .chapter-tag a { color: var(--muted); }
 		.reveal blockquote {
-			border-left: 4px solid var(--accent); background: rgba(217,164,65,0.08);
+			border-left: 4px solid var(--accent); background: var(--blockquote-bg);
 			padding: 0.5em 0.9em; font-size: 0.85em; color: var(--ink);
 			border-radius: 4px; box-shadow: none; font-style: normal; width: 100%;
 		}
-		.reveal .quote-src { font-size: 0.56em; color: #9aa4b0; margin-top: -0.3em; }
+		.reveal .quote-src { font-size: 0.56em; color: var(--muted); margin-top: -0.3em; }
 		.reveal figure { margin: 0; text-align: center; }
-		.reveal figcaption { font-size: 0.5em; color: #7f8b98; margin-top: 0.5em; line-height: 1.3; }
+		.reveal figcaption { font-size: 0.5em; color: var(--muted); margin-top: 0.5em; line-height: 1.3; }
 		.reveal img.shot {
 			display: block; width: auto; max-width: 100%; max-height: 420px;
 			object-fit: contain; margin: 0 auto;
-			border: 1px solid #1c2530; border-radius: 8px;
-			box-shadow: 0 8px 40px rgba(0,0,0,0.6); background: #05070a;
+			border: 1px solid var(--border-img); border-radius: 8px;
+			box-shadow: 0 8px 40px var(--img-shadow); background: var(--img-bg);
 		}
 		.reveal .cols { display: flex; gap: 1.4em; align-items: center; }
 		.reveal .cols > div { flex: 1; min-width: 0; }
+
+		.gkt-theme-toggle {
+			position: fixed;
+			top: 0.6em;
+			right: 0.6em;
+			width: 2.2em;
+			height: 2.2em;
+			border-radius: 50%;
+			border: 1px solid var(--border-soft);
+			background: var(--bg);
+			color: var(--ink);
+			font-size: 16px;
+			line-height: 1;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			z-index: 300;
+			box-shadow: 0 2px 10px var(--img-shadow);
+			transition: transform 0.15s ease, border-color 0.15s ease;
+		}
+		.gkt-theme-toggle:hover, .gkt-theme-toggle:focus-visible {
+			transform: translateY(-2px);
+			border-color: var(--accent);
+		}
 	</style>
 </head>
 <body>
@@ -65,15 +143,18 @@
 
 <!-- 1 · TITLE -->
 <!-- .slide: class="title center" -->
-# We Have Already Had Our Singularity
+# From Disruption to Agency
 
-## Digital Ethics, Deep History, and the Case for Human Judgment
+## AI, Computing Cultures, and the Future of Digital Ethics
 
 <span class="lead">A talk drawn from *History of Computing and Its Cultures: From Calculating to Convergence* (in press for 2026–2027) by David B. Dennis and George K. Thiruvathukal (speaker)</span>
 
 <p class="authors">George K. Thiruvathukal</p>
-<p class="affil">Professor and Chairperson, Computer Science, Loyola University Chicago</p>
-<p class="affil">Visiting Computer Scientist, Argonne National Laboratory</p>
+<p class="affil"><a href="https://www.luc.edu/cs/aboutus/people/profiles/thiruvathukalgeorgek.shtml">Professor and Chairperson, Computer Science, Loyola University Chicago</a> — <a href="mailto:gthiruvathukal@luc.edu">gthiruvathukal@luc.edu</a> (preferred)<br>
+<a href="https://www.alcf.anl.gov/about/people/george-k-thiruvathukal">Visiting Computer Scientist, Argonne National Laboratory</a> — <a href="mailto:gkt@anl.gov">gkt@anl.gov</a></p>
+<p class="affil"><a href="https://keylinks.gkt.sh">keylinks.gkt.sh</a> (web)</p>
+
+<p class="affil"><a href="https://www.luc.edu/digitalethics/events/annualsymposium/" title="The Center for Digital Ethics &amp; Policy at Loyola University Chicago (CDEP)">15th Annual International Symposium on Digital Ethics: MAGIS — September 28–29, 2026</a></p>
 
 Note:
 Cold open framing: every generation that automated calculation, communication, or judgment has called it unprecedented. This talk is a history of computing's repeated disruptions of culture — CHOC runs from the Ishango Bone to 2020 and never once discusses AI as such. AI comes up only near the end, as one instance in a much longer pattern, not as the subject.

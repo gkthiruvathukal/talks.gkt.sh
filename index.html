@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>George K. Thiruvathukal — Talks</title>
+<script src="theme.js"></script>
 <style>
 	:root {
 		color-scheme: light dark;
@@ -17,7 +18,7 @@
 		--accent:  #b8862f;
 	}
 	@media (prefers-color-scheme: dark) {
-		:root {
+		:root:not([data-theme="light"]) {
 			--bg:      #14161a;
 			--ink:     #e8e6e1;
 			--muted:   #93999f;
@@ -27,6 +28,16 @@
 			--shadow-hover: 0 2px 4px rgba(0,0,0,0.35), 0 16px 32px rgba(0,0,0,0.5);
 			--accent:  #d9a441;
 		}
+	}
+	:root[data-theme="dark"] {
+		--bg:      #14161a;
+		--ink:     #e8e6e1;
+		--muted:   #93999f;
+		--card-bg: #1c1f24;
+		--border:  #2a2e34;
+		--shadow:  0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.4);
+		--shadow-hover: 0 2px 4px rgba(0,0,0,0.35), 0 16px 32px rgba(0,0,0,0.5);
+		--accent:  #d9a441;
 	}
 	* { box-sizing: border-box; }
 	body {
@@ -41,11 +52,14 @@
 	header { margin-bottom: 2.5em; }
 	h1 { font-size: 1.6em; margin: 0 0 0.2em; }
 	.subtitle { color: var(--muted); font-size: 0.95em; }
+	.subtitle a { color: var(--muted); text-decoration: underline; text-decoration-color: var(--border); }
+	.subtitle a:hover, .subtitle a:focus-visible { color: var(--accent); text-decoration-color: var(--accent); }
 	.cards {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
 		gap: 1.25em;
 	}
+	.entry { display: flex; flex-direction: column; gap: 0.6em; }
 	.card {
 		display: flex;
 		flex-direction: column;
@@ -86,22 +100,60 @@
 		font-weight: 600;
 		color: var(--accent);
 	}
+	.entry__event {
+		font-size: 0.8em;
+		color: var(--muted);
+		text-decoration: underline;
+		text-decoration-color: var(--border);
+		padding: 0 0.2em;
+	}
+	.entry__event:hover, .entry__event:focus-visible {
+		color: var(--accent);
+		text-decoration-color: var(--accent);
+	}
+	.gkt-theme-toggle {
+		position: fixed;
+		top: 1em;
+		right: 1em;
+		width: 2.4em;
+		height: 2.4em;
+		border-radius: 50%;
+		border: 1px solid var(--border);
+		background: var(--card-bg);
+		color: var(--ink);
+		font-size: 1em;
+		line-height: 1;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		box-shadow: var(--shadow);
+		transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+	}
+	.gkt-theme-toggle:hover, .gkt-theme-toggle:focus-visible {
+		transform: translateY(-2px);
+		box-shadow: var(--shadow-hover);
+		border-color: var(--accent);
+	}
 </style>
 </head>
 <body>
 
 <header>
 	<h1>Talks</h1>
-	<div class="subtitle">George K. Thiruvathukal</div>
+	<div class="subtitle">George K. Thiruvathukal · <a href="https://keylinks.gkt.sh">Key Links</a> (web)</div>
 </header>
 
 <div class="cards">
-	<a class="card" href="luc-digital-ethics-2026/">
-		<span class="card__year">2026</span>
-		<span class="card__title">We Have Already Had Our Singularity</span>
-		<span class="card__desc">Digital ethics, deep history, and the case for human judgment.</span>
-		<span class="card__cta">View talk →</span>
-	</a>
+	<div class="entry">
+		<a class="card" href="luc-digital-ethics-2026/">
+			<span class="card__year">2026</span>
+			<span class="card__title">From Disruption to Agency</span>
+			<span class="card__desc">AI, computing cultures, and the future of digital ethics.</span>
+			<span class="card__cta">View talk →</span>
+		</a>
+		<a class="entry__event" href="https://www.luc.edu/digitalethics/events/annualsymposium/" title="The Center for Digital Ethics &amp; Policy at Loyola University Chicago (CDEP)">15th Annual International Symposium on Digital Ethics: MAGIS — September 28–29, 2026</a>
+	</div>
 </div>
 
 </body>

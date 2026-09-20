@@ -1,4 +1,4 @@
-# We Have Already Had Our Singularity
+# From Disruption to Agency
 
 A self-contained [reveal.js](https://revealjs.com) deck for the 40-minute digital-ethics talk
 drawn from *History of Computing and Its Cultures: From Calculating to Convergence* (in press
