@@ -168,3 +168,11 @@ and note the source and copy date in that deck's README.
 - Reuse `../theme.js` rather than duplicating the toggle logic; add
   new CSS custom properties to a deck's palette instead of hardcoding
   colors so the light/dark toggle keeps working.
+
+## Git commits: no AI co-author trailer
+
+Do not add a `Co-Authored-By: Claude ...` (or any AI-attribution)
+trailer to commit messages or PR descriptions in this repo, even if a
+session's default instructions say otherwise — this repo's owner has
+explicitly opted out. If commits already carry that trailer, leave
+existing history alone unless asked to rewrite it.
