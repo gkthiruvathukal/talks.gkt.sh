@@ -236,21 +236,29 @@ def add_qr_slide(prs):
     img_top = Inches(1.9)
     img_h = Inches(3.4)
 
-    def qr_block(filename, label, url, center_x):
+    def qr_block(filename, label, links, center_x):
+        """links: list of (display_text, href) lines shown under label."""
         pic = add_image(s, filename, center_x, img_top, img_h)
         cap_top = img_top + pic.height + Inches(0.15)
-        tfc = add_textbox(s, Emu(int(center_x - Inches(3.0) // 2)), cap_top, Inches(3.0), Inches(0.8))
+        cap_h = Inches(0.35 + 0.28 * len(links))
+        tfc = add_textbox(s, Emu(int(center_x - Inches(3.0) // 2)), cap_top, Inches(3.0), cap_h)
         p1 = tfc.paragraphs[0]; p1.alignment = PP_ALIGN.CENTER
         r1 = p1.add_run(); r1.text = label
         r1.font.size = Pt(13); r1.font.name = FONT; r1.font.color.rgb = INK
-        p2 = tfc.add_paragraph(); p2.alignment = PP_ALIGN.CENTER; p2.space_before = Pt(2)
-        r2 = p2.add_run(); r2.text = url.split("//", 1)[-1]
-        r2.font.size = Pt(11); r2.font.name = FONT; r2.font.color.rgb = ACCENT2
-        r2.font.underline = True
-        r2.hyperlink.address = url
+        for text, href in links:
+            p = tfc.add_paragraph(); p.alignment = PP_ALIGN.CENTER; p.space_before = Pt(2)
+            run = p.add_run(); run.text = text
+            run.font.size = Pt(11); run.font.name = FONT; run.font.color.rgb = ACCENT2
+            run.font.underline = True
+            run.hyperlink.address = href
 
-    qr_block("qr-talk.png", "This talk", "https://talks.gkt.sh/luc-digital-ethics-2026/", left_cx)
-    qr_block("qr-keylinks.png", "Find me", "https://keylinks.gkt.sh", right_cx)
+    qr_block("qr-talk.png", "This talk", [
+        ("talks.gkt.sh/luc-digital-ethics-2026", "https://talks.gkt.sh/luc-digital-ethics-2026/"),
+        ("DOI: 10.6084/m9.figshare.33944386", "https://doi.org/10.6084/m9.figshare.33944386"),
+    ], left_cx)
+    qr_block("qr-keylinks.png", "Find me", [
+        ("keylinks.gkt.sh", "https://keylinks.gkt.sh"),
+    ], right_cx)
     return s
 
 
