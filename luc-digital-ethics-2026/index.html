@@ -917,13 +917,29 @@ Close on the abstract's own final line, but keep the scope honest out loud: CHOC
 	// Use the SMALLER of width/height to detect "phone-sized", since that's
 	// the device's physical narrow edge regardless of orientation — a phone
 	// in landscape has a large width but is still a phone.
+	//
+	// The aspect-matched canvas's dimensions are also the LOGICAL space slide
+	// content (headings, bullet lists) must fit in, before reveal.js's
+	// transform scales it back up to fill the screen — shrinking either
+	// dimension below what the deck was authored for (1280x800) starves that
+	// axis of room and makes content overflow, no matter how large the final
+	// on-screen scale ends up being. Portrait can safely shrink width (700)
+	// because reveal only stacks content vertically, so a taller derived
+	// height (always > 800 for phone aspect ratios) only ever adds room.
+	// Landscape must NOT shrink height the same way — that's the vertical
+	// axis content actually stacks in — so it holds height at the deck's
+	// authored 800 and grows width instead, which only ever adds room too.
 	function gktRevealSize() {
 		var w = window.innerWidth, h = window.innerHeight;
 		if (Math.min(w, h) > 820) {
 			return { width: 1280, height: 800, margin: 0.06 };
 		}
-		var refWidth = 700;
-		return { width: refWidth, height: Math.round(refWidth * (h / w)), margin: 0.03 };
+		if (w <= h) {
+			var refWidth = 700;
+			return { width: refWidth, height: Math.round(refWidth * (h / w)), margin: 0.03 };
+		}
+		var refHeight = 800;
+		return { width: Math.round(refHeight * (w / h)), height: refHeight, margin: 0.03 };
 	}
 
 	var gktSize = gktRevealSize();
