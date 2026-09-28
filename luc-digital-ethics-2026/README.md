@@ -18,7 +18,29 @@ and `--accent2` variables in `index.html` to match if brand consistency across t
   the `choc-book` repo's `images/` directory. This is a frozen snapshot, not a live link: if
   CHOC's own images are later revised, these copies won't update automatically — re-copy the
   relevant files from `choc-book/images/` by hand if that happens. Attributions for every image
-  stay in each slide's `<figcaption>`, unchanged from the book's own credit lines.
+  stay in each slide's `<figcaption>`, unchanged from the book's own credit lines. It also holds
+  `qr-talk.svg`/`qr-keylinks.svg` (used by `index.html`) and `qr-talk.png`/`qr-keylinks.png`
+  (used by `talk.tex`/`build_pptx.py`) — QR codes to this talk's URL and the speaker's keylinks
+  page, generated locally with the Python `qrcode` package rather than fetched from a network
+  service, keeping the deck's no-network-dependency property. To regenerate after a URL changes,
+  run (after `pip install qrcode[pil]`):
+  ```python
+  import qrcode
+  import qrcode.image.svg as svg
+
+  URLS = {"qr-talk": "https://talks.gkt.sh/luc-digital-ethics-2026/",
+          "qr-keylinks": "https://keylinks.gkt.sh"}
+
+  for name, url in URLS.items():
+      png = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_M, box_size=20, border=2)
+      png.add_data(url); png.make(fit=True)
+      png.make_image(fill_color="black", back_color="white").save(f"images/{name}.png")
+
+      vec = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_M, box_size=10,
+                           border=2, image_factory=svg.SvgPathFillImage)
+      vec.add_data(url); vec.make(fit=True)
+      vec.make_image().save(f"images/{name}.svg")
+  ```
 
 This repo is the standalone home for the talk — it was split out of `choc-book` (a peer
 directory) so it can be presented, zipped, or pushed to its own remote independent of the book's
@@ -26,7 +48,7 @@ repo.
 
 ## Archival print version (LaTeX/Beamer)
 
-`talk.tex` is a hand-kept Beamer edition of the same 33 slides, for a citable, easy-to-render
+`talk.tex` is a hand-kept Beamer edition of the same 35 slides, for a citable, easy-to-render
 PDF (e.g. to accompany the [figshare DOI](https://doi.org/10.6084/m9.figshare.33944386) linked
 from the title slide) independent of a browser or reveal.js. It reuses `images/` directly and
 defaults to a light, print-friendly palette (the web deck's light-mode colors) rather than the
@@ -40,12 +62,12 @@ make distclean  # remove build/ entirely
 ```
 
 Requires a LaTeX toolchain with `latexmk` and `pdflatex` (any distribution — MacTeX, TeX Live,
-etc.) plus the `csquotes` package. `make pdf` builds a 33-page `build/talk.pdf` with no LaTeX
+etc.) plus the `csquotes` package. `make pdf` builds a 35-page `build/talk.pdf` with no LaTeX
 warnings and no overfull/underfull boxes.
 
 ## PowerPoint version
 
-`build_pptx.py` generates a `.pptx` edition of the same 33 slides, using
+`build_pptx.py` generates a `.pptx` edition of the same 35 slides, using
 [python-pptx](https://python-pptx.readthedocs.io/) — for audiences or reviewers who need an
 editable PowerPoint file rather than a PDF or a browser. Like `talk.tex`, it's a separate,
 hand-maintained source (not generated from `index.html` or vice versa), reuses `images/`
@@ -78,7 +100,11 @@ editing the talk, update all three.
 
 ## What's covered
 
-32 content slides plus title, organized in three acts:
+32 content slides plus title, organized in three acts. Two additional bookend slides — a QR
+codes slide linking to this talk's URL and the speaker's keylinks page — sit right after the
+title slide and again at the very close (frame/slide comments "1B" and "32" in `talk.tex` and
+`build_pptx.py`); like the title slide, they're outside the numbered content sequence and carry
+no page number.
 
 1. **We Already Had Our Singularity** (slides 1–4) — CHOC's core thesis and the Faustian-Turing
    motif from the conclusion, planted here and resolved at the close.

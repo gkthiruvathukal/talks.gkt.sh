@@ -220,9 +220,43 @@ def image_and_caption(slide, filename, caption, center_x, top, height):
     return pic
 
 
+def add_qr_slide(prs):
+    """Uncounted bookend slide (like the title slide): two QR codes, one to
+    this talk's URL and one to the speaker's keylinks page. Used both right
+    after the title slide and again as the deck's closing slide."""
+    s = new_slide(prs)
+    tf = add_textbox(s, Inches(1.0), Inches(0.7), SLIDE_W - Inches(2.0), Inches(0.9))
+    p = tf.paragraphs[0]; p.alignment = PP_ALIGN.CENTER
+    r = p.add_run(); r.text = "Follow Along"
+    r.font.size = Pt(32); r.font.bold = True; r.font.color.rgb = ACCENT; r.font.name = FONT
+
+    half_w = Inches(5.8)
+    left_cx = MARGIN + half_w // 2
+    right_cx = SLIDE_W - MARGIN - half_w // 2
+    img_top = Inches(1.9)
+    img_h = Inches(3.4)
+
+    def qr_block(filename, label, url, center_x):
+        pic = add_image(s, filename, center_x, img_top, img_h)
+        cap_top = img_top + pic.height + Inches(0.15)
+        tfc = add_textbox(s, Emu(int(center_x - Inches(3.0) // 2)), cap_top, Inches(3.0), Inches(0.8))
+        p1 = tfc.paragraphs[0]; p1.alignment = PP_ALIGN.CENTER
+        r1 = p1.add_run(); r1.text = label
+        r1.font.size = Pt(13); r1.font.name = FONT; r1.font.color.rgb = INK
+        p2 = tfc.add_paragraph(); p2.alignment = PP_ALIGN.CENTER; p2.space_before = Pt(2)
+        r2 = p2.add_run(); r2.text = url.split("//", 1)[-1]
+        r2.font.size = Pt(11); r2.font.name = FONT; r2.font.color.rgb = ACCENT2
+        r2.font.underline = True
+        r2.hyperlink.address = url
+
+    qr_block("qr-talk.png", "This talk", "https://talks.gkt.sh/luc-digital-ethics-2026/", left_cx)
+    qr_block("qr-keylinks.png", "Find me", "https://keylinks.gkt.sh", right_cx)
+    return s
+
+
 # ============================================================
 def build(prs):
-    TOTAL = 31
+    TOTAL = 33
     n = 0
 
     def next_n():
@@ -294,6 +328,9 @@ def build(prs):
     doi_run.font.underline = True
     doi_run.hyperlink.address = "https://doi.org/10.6084/m9.figshare.33944386"
     next_n()
+
+    # 1B · QR CODES (post-title)
+    add_qr_slide(prs)
 
     # 2 · THESIS
     s = new_slide(prs)
@@ -835,6 +872,9 @@ def build(prs):
     r4 = p4.add_run(); r4.text = "George K. Thiruvathukal  ·  David B. Dennis"
     r4.font.size = Pt(15); r4.font.name = FONT; r4.font.color.rgb = INK
     add_pagenum(s, next_n(), TOTAL)
+
+    # 32 · QR CODES (closing, identical to post-title slide)
+    add_qr_slide(prs)
 
 
 def main():
