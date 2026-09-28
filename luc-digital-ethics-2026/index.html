@@ -71,10 +71,11 @@
 		.reveal              { font-size: 30px; color: var(--ink); }
 		/* Phones: bump the base size a bit. Most of the "tiny text, huge empty
 		   bars" feeling on mobile is really reveal.js scaling its fixed 1280x800
-		   landscape canvas down to fit a narrow portrait viewport (see the
-		   width/height JS below, which addresses that); this just asks for
-		   slightly larger text on top of that fix. */
-		@media (max-width: 820px) {
+		   canvas down to fit a narrow viewport (see the width/height JS below,
+		   which addresses that); this just asks for slightly larger text on
+		   top of that fix. Covers both orientations: narrow width (portrait)
+		   or narrow height (landscape, where width is large but height isn't). */
+		@media (max-width: 820px), (max-height: 820px) and (orientation: landscape) {
 			.reveal { font-size: 34px; }
 		}
 		.reveal .slides section { text-align: left; }
@@ -907,16 +908,18 @@ Close on the abstract's own final line, but keep the scope honest out loud: CHOC
 <script src="reveal/plugin/notes/notes.js"></script>
 <script>
 	// reveal.js scales its fixed-size canvas (below, 1280x800) uniformly to fit
-	// the viewport, so on a landscape canvas viewed on a narrow portrait phone,
-	// the width is the binding constraint and the canvas is shrunk far more
-	// than the phone's height needs — leaving big empty bars above/below and
-	// making everything (text included) much smaller than it has to be.
-	// On phones, use a canvas whose aspect ratio matches the actual viewport
-	// instead, so the slide fills the screen with ~no letterboxing and text
-	// renders as large as the space allows.
+	// the viewport, so on a landscape canvas viewed on a narrow phone, the
+	// binding constraint (width in portrait, height in landscape) shrinks the
+	// canvas far more than the phone's other dimension needs — leaving big
+	// empty bars and making everything (text included) much smaller than it
+	// has to be. On phones, use a canvas whose aspect ratio matches the actual
+	// viewport instead, so the slide fills the screen with ~no letterboxing.
+	// Use the SMALLER of width/height to detect "phone-sized", since that's
+	// the device's physical narrow edge regardless of orientation — a phone
+	// in landscape has a large width but is still a phone.
 	function gktRevealSize() {
 		var w = window.innerWidth, h = window.innerHeight;
-		if (Math.max(w, h) > 820) {
+		if (Math.min(w, h) > 820) {
 			return { width: 1280, height: 800, margin: 0.06 };
 		}
 		var refWidth = 700;
