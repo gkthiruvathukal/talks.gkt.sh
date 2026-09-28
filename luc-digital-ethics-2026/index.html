@@ -953,23 +953,6 @@ Close on the abstract's own final line, but keep the scope honest out loud: CHOC
 		plugins: [ RevealMarkdown, RevealNotes ],
 	});
 
-	// TEMPORARY diagnostic readout — remove once mobile sizing is confirmed fixed.
-	// Tap it to dismiss.
-	function gktDebugUpdate(size) {
-		var el = document.getElementById('gktdebug');
-		if (!el) {
-			el = document.createElement('div');
-			el.id = 'gktdebug';
-			el.style.cssText = 'position:fixed;top:4px;right:4px;z-index:99999;background:rgba(0,0,0,0.8);color:#0f0;font:11px/1.4 monospace;padding:4px 7px;border-radius:4px;white-space:pre;';
-			el.addEventListener('click', function () { el.remove(); });
-			document.body.appendChild(el);
-		}
-		var scale = (window.Reveal && Reveal.getScale) ? Reveal.getScale().toFixed(3) : '?';
-		el.textContent = 'iw=' + window.innerWidth + ' ih=' + window.innerHeight
-			+ '\ncfg=' + size.width + 'x' + size.height + ' margin=' + size.margin
-			+ '\nscale=' + scale;
-	}
-
 	// Re-fit on orientation change / resize (debounced), and also shortly after
 	// load: mobile browsers can report an unsettled window.innerHeight on the
 	// very first paint (e.g. before the address bar collapses), which would
@@ -980,7 +963,6 @@ Close on the abstract's own final line, but keep the scope honest out loud: CHOC
 		var size = gktRevealSize();
 		Reveal.configure({ width: size.width, height: size.height, margin: size.margin });
 		Reveal.layout();
-		gktDebugUpdate(size);
 	}
 	window.addEventListener('resize', function () {
 		clearTimeout(gktResizeTimer);
