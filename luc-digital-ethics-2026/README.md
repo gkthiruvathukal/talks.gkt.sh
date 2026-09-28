@@ -24,6 +24,45 @@ This repo is the standalone home for the talk — it was split out of `choc-book
 directory) so it can be presented, zipped, or pushed to its own remote independent of the book's
 repo.
 
+## Archival print version (LaTeX/Beamer)
+
+`talk.tex` is a hand-kept Beamer edition of the same 33 slides, for a citable, easy-to-render
+PDF (e.g. to accompany the [figshare DOI](https://doi.org/10.6084/m9.figshare.33944386) linked
+from the title slide) independent of a browser or reveal.js. It reuses `images/` directly and
+defaults to a light, print-friendly palette (the web deck's light-mode colors) rather than the
+on-screen dark theme.
+
+```bash
+make pdf      # builds build/talk.pdf via latexmk
+make open     # build, then open the PDF (macOS)
+make clean    # remove latexmk's auxiliary files, keep the PDF/PPTX
+make distclean  # remove build/ entirely
+```
+
+Requires a LaTeX toolchain with `latexmk` and `pdflatex` (any distribution — MacTeX, TeX Live,
+etc.) plus the `csquotes` package. `make pdf` builds a 33-page `build/talk.pdf` with no LaTeX
+warnings and no overfull/underfull boxes.
+
+## PowerPoint version
+
+`build_pptx.py` generates a `.pptx` edition of the same 33 slides, using
+[python-pptx](https://python-pptx.readthedocs.io/) — for audiences or reviewers who need an
+editable PowerPoint file rather than a PDF or a browser. Like `talk.tex`, it's a separate,
+hand-maintained source (not generated from `index.html` or vice versa), reuses `images/`
+directly, and uses the same light amber/sage palette. Slide size is 13.333in × 7.5in
+(widescreen 16:9).
+
+```bash
+make pptx        # builds build/talk.pptx
+make open-pptx   # build, then open it (macOS)
+```
+
+Requires `python-pptx` and `Pillow`: `python3 -m pip install --user python-pptx pillow`.
+
+`index.html`, `talk.tex`, and `build_pptx.py` are three independent sources for the same
+slides, kept in sync by hand — there is no automated conversion between any of them. When
+editing the talk, update all three.
+
 ## Present it
 
 ```bash

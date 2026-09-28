@@ -15,6 +15,9 @@ talks.gkt.sh/
 ├── CNAME                         # GitHub Pages custom domain
 └── luc-digital-ethics-2026/      # one talk = one self-contained deck
     ├── index.html                #   the deck itself (markdown slides inline)
+    ├── talk.tex                  #   archival Beamer PDF, hand-kept in sync with index.html
+    ├── build_pptx.py             #   generates a PowerPoint edition, same content
+    ├── Makefile                  #   `make pdf` / `make pptx` build into build/
     ├── serve.sh                  #   local dev server for this deck
     ├── README.md                 #   talk-specific notes (sourcing, structure, gaps)
     ├── images/                   #   images used by this deck only
@@ -88,6 +91,19 @@ Each deck is a single `index.html` using [reveal.js](https://revealjs.com):
 - To start a new deck, copy an existing talk directory (index.html,
   reveal/, serve.sh, images/) as a template and edit the markdown,
   palette, and images for the new talk.
+
+## Archival PDF and PowerPoint companions
+
+A deck may optionally carry non-HTML editions of the same content alongside its `index.html`:
+
+- **Beamer/PDF** (`talk.tex` + `Makefile`) — a citable, offline-renderable PDF; `make pdf`
+  (via `latexmk`) builds it. See `luc-digital-ethics-2026/talk.tex`.
+- **PowerPoint** (`build_pptx.py`) — an editable `.pptx` for audiences/reviewers who need one;
+  `make pptx` (via `python-pptx`) builds it. See `luc-digital-ethics-2026/build_pptx.py`.
+
+Neither is generated from `index.html` or from each other — all three (HTML, `.tex`, `.py`) are
+separate, hand-maintained sources that mirror the same slide content, so edit all of them when
+the talk changes. Both build into that deck's own `build/` directory, which is gitignored.
 
 ## Viewing a deck locally (`serve.sh`)
 
