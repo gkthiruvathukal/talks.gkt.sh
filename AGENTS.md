@@ -105,6 +105,13 @@ Neither is generated from `index.html` or from each other — all three (HTML, `
 separate, hand-maintained sources that mirror the same slide content, so edit all of them when
 the talk changes. Both build into that deck's own `build/` directory, which is gitignored.
 
+**Exception — presentation-order reordering:** if a deck's `index.html` is reordered into a timed
+path (e.g. an essential subset first, backup slides after a divider, for a shorter time slot),
+the archival `.tex`/`.pptx` are not required to follow that reordering — they're meant as the
+full-length chronological record, not a timed presentation path. Content *additions or edits*
+still belong in all three; only slide *order* can validly diverge. See
+`luc-digital-ethics-2026/README.md`'s "What's covered" section for a worked example.
+
 ## Viewing a deck locally (`serve.sh`)
 
 Each deck directory has its own `serve.sh`, run from inside that

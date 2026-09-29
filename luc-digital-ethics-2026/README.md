@@ -100,11 +100,22 @@ editing the talk, update all three.
 
 ## What's covered
 
-32 content slides plus title, organized in three acts. Two additional bookend slides — a QR
-codes slide linking to this talk's URL and the speaker's keylinks page — sit right after the
-title slide and again at the very close (frame/slide comments "1B" and "32" in `talk.tex` and
-`build_pptx.py`); like the title slide, they're outside the numbered content sequence and carry
-no page number.
+`index.html` (the web deck) holds 35 slides in presentation order: an **essential path of 22**
+(20 content/structural slides plus the two QR "Follow Along" bookends) sized for a 30-minute
+slot, then a "Backup Slides" divider, then **13 backup slides** held in reserve for Q&A or a
+longer version of the talk. Both segments preserve the book's chronological order internally —
+the backups are extra lens examples pulled out of the middle of that march, not a different
+argument. `talk.tex` and `build_pptx.py` were **not** reordered and still present the original
+single-pass, 35-slide chronological structure described below — a deliberate exception to the
+"keep all three in sync" rule for the two archival formats, since they're meant as the
+full-length record rather than a timed presentation path. If the 30-minute cut changes, update
+`index.html`'s ordering; the `.tex`/`.pptx` chronological structure doesn't need to follow.
+
+The chronological argument (as `talk.tex`/`build_pptx.py` present it, and as `index.html`
+presents it internally within each of its two segments) runs in three acts, with the QR "Follow
+Along" bookends sitting right after the title slide and again at the very close (frame/slide
+comments "1B" and "32" in `talk.tex`/`build_pptx.py`) — like the title slide, outside the
+numbered content sequence and carrying no page number:
 
 1. **We Already Had Our Singularity** (slides 1–4) — CHOC's core thesis and the Faustian-Turing
    motif from the conclusion, planted here and resolved at the close.
@@ -120,6 +131,16 @@ no page number.
 3. **Directing the Disruption** (slides 29–33) — resolves the Faustian-Turing motif, names
    CHOC's explicit 2020 endpoint as a hand-off to the talk, and closes on the talk abstract's own
    final line.
+
+In `index.html`'s reordered 30-minute path, Act 2 is trimmed to one strong example per lens
+(Leibniz, Lovelace, the ENIAC women, the Turing machine, UNIVAC, Hopper, the Mac/supercomputer
+pairing, the memex, and the pre-AI deep-learning slide) plus the bridge slide into Act 3; the
+remaining Act 2 examples (access under scribal elites, the Babbage tables crisis, census
+overload, gutta-percha/cables, PDP-8/Engelbart, Altair, Walkman, Mosaic, browser wars,
+WikiLeaks/NSA, iPhone, global divergence, cloud infrastructure) are the 13 backups. Acts 1 and 3, plus both QR bookends, are kept whole in
+the essential path — they're short and each slide resolves or sets up something else (or, for the
+QR slides, does useful work regardless of how much time is left), so cutting into them saves
+little time for a large cost.
 
 **On AI's role in the deck:** CHOC ends in 2020 and never discusses generative or agentic AI.
 Most historical slides make their point without mentioning AI at all; AI appears on-slide only in
