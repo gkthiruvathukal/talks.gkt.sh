@@ -48,7 +48,7 @@ repo.
 
 ## Archival print version (LaTeX/Beamer)
 
-`talk.tex` is a hand-kept Beamer edition of the same 35 slides, for a citable, easy-to-render
+`talk.tex` is a hand-kept Beamer edition of the same 36 slides, for a citable, easy-to-render
 PDF (e.g. to accompany the [figshare DOI](https://doi.org/10.6084/m9.figshare.33944386) linked
 from the title slide) independent of a browser or reveal.js. It reuses `images/` directly and
 defaults to a light, print-friendly palette (the web deck's light-mode colors) rather than the
@@ -62,12 +62,12 @@ make distclean  # remove build/ entirely
 ```
 
 Requires a LaTeX toolchain with `latexmk` and `pdflatex` (any distribution — MacTeX, TeX Live,
-etc.) plus the `csquotes` package. `make pdf` builds a 35-page `build/talk.pdf` with no LaTeX
+etc.) plus the `csquotes` package. `make pdf` builds a 36-page `build/talk.pdf` with no LaTeX
 warnings and no overfull/underfull boxes.
 
 ## PowerPoint version
 
-`build_pptx.py` generates a `.pptx` edition of the same 35 slides, using
+`build_pptx.py` generates a `.pptx` edition of the same 36 slides, using
 [python-pptx](https://python-pptx.readthedocs.io/) — for audiences or reviewers who need an
 editable PowerPoint file rather than a PDF or a browser. Like `talk.tex`, it's a separate,
 hand-maintained source (not generated from `index.html` or vice versa), reuses `images/`
@@ -100,16 +100,24 @@ editing the talk, update all three.
 
 ## What's covered
 
-`index.html` (the web deck) holds 35 slides in presentation order: an **essential path of 22**
-(20 content/structural slides plus the two QR "Follow Along" bookends) sized for a 30-minute
-slot, then a "Backup Slides" divider, then **13 backup slides** held in reserve for Q&A or a
-longer version of the talk. Both segments preserve the book's chronological order internally —
-the backups are extra lens examples pulled out of the middle of that march, not a different
-argument. `talk.tex` and `build_pptx.py` were **not** reordered and still present the original
-single-pass, 35-slide chronological structure described below — a deliberate exception to the
-"keep all three in sync" rule for the two archival formats, since they're meant as the
-full-length record rather than a timed presentation path. If the 30-minute cut changes, update
-`index.html`'s ordering; the `.tex`/`.pptx` chronological structure doesn't need to follow.
+`index.html` (the web deck) holds 36 slides in presentation order: an **essential path of 23**
+(20 content/structural slides, the two QR "Follow Along" bookends, and a "Selected Related Work"
+slide) sized for a 30-minute slot, then a "Backup Slides" divider, then **13 backup slides** held
+in reserve for Q&A or a longer version of the talk. Both segments preserve the book's
+chronological order internally — the backups are extra lens examples pulled out of the middle of
+that march, not a different argument. `talk.tex` and `build_pptx.py` were **not** reordered and
+still present the original single-pass, 36-slide chronological structure described below — a
+deliberate exception to the "keep all three in sync" rule for the two archival formats, since
+they're meant as the full-length record rather than a timed presentation path. If the 30-minute
+cut changes, update `index.html`'s ordering; the `.tex`/`.pptx` chronological structure doesn't
+need to follow.
+
+Right before the closing QR bookend, all three editions carry a "Selected Related Work" slide —
+a short, curated (not exhaustive) list of George's own recent books and AI/computer-vision/
+energy-efficient-computing papers, sorted newest-first, with no co-author names (the full list
+with full author credit lives at [cv.gkt.sh/publications](https://cv.gkt.sh/publications/),
+linked at the bottom of the slide). This is content, not reordering, so it's present — and kept
+in sync — across all three formats, unlike the timed-path/backup split above.
 
 The chronological argument (as `talk.tex`/`build_pptx.py` present it, and as `index.html`
 presents it internally within each of its two segments) runs in three acts, with the QR "Follow

@@ -134,6 +134,33 @@ def add_bullets(tf, items, size=16):
         add_runs(p, text, size=size)
 
 
+def add_linked_bullets(tf, items, size=13):
+    """items: list of (title, href, suffix, italic) — a hyperlinked bulleted
+    list, used for the Selected Related Work slide's book/paper citations."""
+    for i, (title, href, suffix, italic) in enumerate(items):
+        p = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
+        p.space_after = Pt(8)
+        bullet = p.add_run()
+        bullet.text = "•  "
+        bullet.font.color.rgb = ACCENT
+        bullet.font.bold = True
+        bullet.font.size = Pt(size)
+        bullet.font.name = FONT
+        link = p.add_run()
+        link.text = title
+        link.font.size = Pt(size)
+        link.font.name = FONT
+        link.font.color.rgb = ACCENT2
+        link.font.underline = True
+        link.font.italic = italic
+        link.hyperlink.address = href
+        tail = p.add_run()
+        tail.text = suffix
+        tail.font.size = Pt(size)
+        tail.font.name = FONT
+        tail.font.color.rgb = INK
+
+
 def add_quote(tf, quote_text, source_text, size=16):
     p = tf.paragraphs[0]
     p.space_after = Pt(6)
@@ -264,7 +291,7 @@ def add_qr_slide(prs):
 
 # ============================================================
 def build(prs):
-    TOTAL = 33
+    TOTAL = 34
     n = 0
 
     def next_n():
@@ -879,6 +906,68 @@ def build(prs):
     p4 = tf4.paragraphs[0]; p4.alignment = PP_ALIGN.CENTER
     r4 = p4.add_run(); r4.text = "George K. Thiruvathukal  ·  David B. Dennis"
     r4.font.size = Pt(15); r4.font.name = FONT; r4.font.color.rgb = INK
+    add_pagenum(s, next_n(), TOTAL)
+
+    # 31a · RELATED WORK
+    s = new_slide(prs)
+    add_title(s, "Selected Related Work")
+    half_w = Inches(5.8)
+    left_x = MARGIN
+    right_x = SLIDE_W - MARGIN - half_w
+    heading_h = Inches(0.4)
+
+    tfLH = add_textbox(s, left_x, CONTENT_TOP, half_w, heading_h)
+    rLH = tfLH.paragraphs[0].add_run(); rLH.text = "Books"
+    rLH.font.bold = True; rLH.font.size = Pt(16); rLH.font.name = FONT; rLH.font.color.rgb = INK
+    tfL = add_textbox(s, left_x, CONTENT_TOP + heading_h + Inches(0.1), half_w, Inches(4.2))
+    add_linked_bullets(tfL, [
+        ("Recursion: Mathematics and Python",
+         "https://www.routledge.com/Recursion-Mathematics-and-Python/Lu-Thiruvathukal/p/book/9781041149538",
+         " (Routledge, 2026)", True),
+        ("Introduction to Statistics in Criminal Justice and Criminology",
+         "https://www.wiley.com/en-us/shop/general-introductory-law/introduction-to-statistics-in-criminal-justice-and-criminology-a-practical-approach-to-calculating-using-and-interpreting-data-p-9781118559307",
+         " (Wiley, 2026)", True),
+        ("Intermediate C Programming, 2nd ed.",
+         "https://www.routledge.com/Intermediate-C-Programming/Lu-Thiruvathukal/p/book/9781032189819",
+         " (Routledge, 2024)", True),
+        ("Low-Power Computer Vision: Improve the Efficiency of Artificial Intelligence",
+         "https://ecommons.luc.edu/cs_facpubs/281/",
+         " (2022, lead editor)", True),
+        ("Codename Revolution: The Nintendo Wii Platform",
+         "https://mitpress.mit.edu/9780262016803/codename-revolution/",
+         " (MIT Press, 2012)", True),
+    ], size=12)
+
+    tfRH = add_textbox(s, right_x, CONTENT_TOP, half_w, heading_h)
+    rRH = tfRH.paragraphs[0].add_run(); rRH.text = "Selected Papers"
+    rRH.font.bold = True; rRH.font.size = Pt(16); rRH.font.name = FONT; rRH.font.color.rgb = INK
+    tfR = add_textbox(s, right_x, CONTENT_TOP + heading_h + Inches(0.1), half_w, Inches(4.2))
+    add_linked_bullets(tfR, [
+        ("Introducing “Practicing AI”",
+         "https://doi.org/10.1109/MC.2026.3722450", " (Computer, 2026)", False),
+        ("Now's the Time: Computer Science Must Evolve to Emphasize Software and "
+         "Systems Engineering With AI",
+         "https://doi.org/10.1109/MC.2026.3695220", " (Computer, 2026)", False),
+        ("SysLLMatic: Large Language Models are Software System Optimizers",
+         "https://doi.org/10.48550/arXiv.2506.01249", " (2025)", False),
+        ("Artificial Intelligence Employment Interviews: Examining Limitations, "
+         "Biases, and Perceptions",
+         "https://doi.org/10.1109/MC.2024.3404669", " (Computer, 2024)", False),
+        ("An Empirical Study of Pre-Trained Model Reuse in the Hugging Face Deep "
+         "Learning Model Registry",
+         "https://doi.org/10.1109/ICSE48619.2023.00206", " (ICSE 2023)", False),
+    ], size=12)
+
+    line = s.shapes.add_shape(MSO_SHAPE.RECTANGLE, FULL_X, CHAPTERTAG_Y, FULL_W, Pt(0.75))
+    line.fill.solid(); line.fill.fore_color.rgb = BORDER; line.line.fill.background()
+    tf_foot = add_textbox(s, FULL_X, CHAPTERTAG_Y + Inches(0.06), FULL_W, Inches(0.35))
+    pf = tf_foot.paragraphs[0]
+    rf = pf.add_run(); rf.text = "Full list: "
+    rf.font.size = Pt(11); rf.font.color.rgb = MUTED; rf.font.name = FONT
+    rf2 = pf.add_run(); rf2.text = "cv.gkt.sh/publications"
+    rf2.font.size = Pt(11); rf2.font.color.rgb = ACCENT2; rf2.font.name = FONT
+    rf2.font.underline = True
+    rf2.hyperlink.address = "https://cv.gkt.sh/publications/"
     add_pagenum(s, next_n(), TOTAL)
 
     # 32 · QR CODES (closing, identical to post-title slide)
