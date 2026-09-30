@@ -7,7 +7,7 @@
 <script src="theme.js"></script>
 <style>
 	:root {
-		color-scheme: light dark;
+		color-scheme: light;
 		--bg:      #f5f4f1;
 		--ink:     #1c1c1c;
 		--muted:   #6b6b6b;
@@ -17,19 +17,12 @@
 		--shadow-hover: 0 2px 4px rgba(0,0,0,0.06), 0 16px 32px rgba(0,0,0,0.10);
 		--accent:  #b8862f;
 	}
-	@media (prefers-color-scheme: dark) {
-		:root:not([data-theme="light"]) {
-			--bg:      #14161a;
-			--ink:     #e8e6e1;
-			--muted:   #93999f;
-			--card-bg: #1c1f24;
-			--border:  #2a2e34;
-			--shadow:  0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.4);
-			--shadow-hover: 0 2px 4px rgba(0,0,0,0.35), 0 16px 32px rgba(0,0,0,0.5);
-			--accent:  #d9a441;
-		}
-	}
+	/* data-theme is always set explicitly by theme.js (default "dark") — OS-level
+	   prefers-color-scheme is deliberately not consulted, so there is no bare
+	   dark default here the way the decks have; light above is the fallback
+	   only until theme.js's inline apply() runs. */
 	:root[data-theme="dark"] {
+		color-scheme: dark;
 		--bg:      #14161a;
 		--ink:     #e8e6e1;
 		--muted:   #93999f;

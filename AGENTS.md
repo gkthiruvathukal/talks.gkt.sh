@@ -45,19 +45,25 @@ zipped up, or split into its own repo without touching anything else.
 - One shared script, loaded by both the landing page and every deck
   (`<script src="../theme.js">` from inside a deck directory).
 - Stores an explicit user choice in `localStorage` under `gkt-theme`
-  (`"light"` | `"dark"`); with no explicit choice it falls back to
-  `prefers-color-scheme`.
+  (`"light"` | `"dark"`); with no explicit choice it defaults to
+  `"dark"`. OS-level `prefers-color-scheme` is deliberately **not**
+  consulted anywhere — mobile browsers (iOS Safari, Edge) were seen
+  applying it inconsistently on the deck, so the toggle is the sole
+  source of truth on every platform.
 - Since the landing page and every deck are served from the same
   origin, a theme choice made anywhere applies everywhere.
 - Mounts a floating circular toggle button (`.gkt-theme-toggle`) and
-  sets `data-theme` on `<html>`, which pages key their CSS custom
-  properties off of. Also calls `Reveal.sync()` after a toggle so an
-  open deck re-renders immediately.
+  sets `data-theme` on `<html>` (always `"light"` or `"dark"`, never
+  absent), which pages key their CSS custom properties off of. Also
+  calls `Reveal.sync()` after a toggle so an open deck re-renders
+  immediately.
 - Each page defines its own `--bg`, `--ink`, `--accent`, etc. as CSS
-  custom properties under `:root` (default/dark) and again under a
-  `@media (prefers-color-scheme: light)` guard plus a
-  `:root[data-theme="..."]` override — `theme.js` only flips the
-  attribute, it doesn't own the palette.
+  custom properties under `:root` (the default theme — light for the
+  landing page, dark for a deck) plus a `:root[data-theme="..."]`
+  override for the other theme — `theme.js` only flips the attribute,
+  it doesn't own the palette. Each also sets `color-scheme` under both
+  blocks so native form/scrollbar rendering follows the same explicit
+  choice rather than the OS setting.
 
 ## How a deck is built (reveal.js, markdown-in-HTML)
 

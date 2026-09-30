@@ -3,31 +3,33 @@
  * Stores the explicit choice in localStorage under "gkt-theme" ("light" | "dark").
  * Since every talk is served from the same origin, picking a theme on the
  * landing page or inside any deck applies everywhere else too.
- * With no explicit choice, the OS-level prefers-color-scheme is used instead.
+ *
+ * OS-level prefers-color-scheme is deliberately ignored (mobile browsers were
+ * inconsistent about honoring it, notably iOS Safari and Edge on the deck):
+ * the toggle is the only source of truth, and the default with no explicit
+ * choice yet is "dark".
  */
 (function () {
 	var KEY = "gkt-theme";
+	var DEFAULT = "dark";
 	var root = document.documentElement;
 
 	function stored() {
-		try { return localStorage.getItem(KEY); } catch (e) { return null; }
+		try {
+			var v = localStorage.getItem(KEY);
+			return (v === "light" || v === "dark") ? v : null;
+		} catch (e) { return null; }
 	}
 
 	function apply(theme) {
-		if (theme === "light" || theme === "dark") {
-			root.setAttribute("data-theme", theme);
-		} else {
-			root.removeAttribute("data-theme");
-		}
+		root.setAttribute("data-theme", theme === "light" ? "light" : "dark");
 	}
 
 	// Applied immediately (script is loaded early, before body renders) to avoid a flash.
-	apply(stored());
+	apply(stored() || DEFAULT);
 
 	function effective() {
-		var explicit = root.getAttribute("data-theme");
-		if (explicit) return explicit;
-		return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+		return root.getAttribute("data-theme") === "light" ? "light" : "dark";
 	}
 
 	function resync() {
@@ -61,7 +63,7 @@
 
 		window.addEventListener("storage", function (e) {
 			if (e.key === KEY) {
-				apply(e.newValue);
+				apply(e.newValue === "light" ? "light" : DEFAULT);
 				sync();
 				resync();
 			}

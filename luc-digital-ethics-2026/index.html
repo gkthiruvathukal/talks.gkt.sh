@@ -15,10 +15,13 @@
 	<link rel="stylesheet" href="reveal/dist/theme/black.css" id="theme">
 
 	<style>
-		/* Dark is the deck's native palette; :root carries it unconditionally so every
-		   color has a real definition outside a media/data-theme block (see the light
-		   override below, which is what actually gets guarded). */
+		/* Dark is the deck's native palette and its default — data-theme is always set
+		   explicitly by theme.js (default "dark"), so OS-level prefers-color-scheme is
+		   deliberately not consulted here; :root just carries the dark values as the
+		   fallback until theme.js's inline apply() runs, with light as the sole,
+		   explicit override below. */
 		:root {
+			color-scheme: dark;
 			--accent:      #d9a441; /* warm amber — headings */
 			--accent2:     #8fb996; /* soft sage — lead / emphasis */
 			--bg:          #14161a;
@@ -35,24 +38,8 @@
 			--r-link-color: #42affa;
 			--r-link-color-hover: #8dcffc;
 		}
-		@media (prefers-color-scheme: light) {
-			:root:not([data-theme="dark"]) {
-				--accent:      #b8862f;
-				--accent2:     #3f7a52;
-				--bg:          #f5f4f1;
-				--ink:         #1c1c1c;
-				--strong:      #000000;
-				--muted:       #6b6b6b;
-				--border-soft: #e1ded7;
-				--border-img:  #e1ded7;
-				--img-bg:      #f0ede6;
-				--img-shadow:  rgba(0,0,0,0.15);
-				--blockquote-bg: rgba(184,134,47,0.12);
-				--r-link-color: #1a63b8;
-				--r-link-color-hover: #4a8fd1;
-			}
-		}
 		:root[data-theme="light"] {
+			color-scheme: light;
 			--accent:      #b8862f;
 			--accent2:     #3f7a52;
 			--bg:          #f5f4f1;
