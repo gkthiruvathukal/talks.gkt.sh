@@ -100,55 +100,40 @@ editing the talk, update all three.
 
 ## What's covered
 
-`index.html` (the web deck) holds 36 slides in presentation order: an **essential path of 23**
-(20 content/structural slides, the two QR "Follow Along" bookends, and a "Selected Related Work"
-slide) sized for a 30-minute slot, then a "Backup Slides" divider, then **13 backup slides** held
-in reserve for Q&A or a longer version of the talk. Both segments preserve the book's
-chronological order internally — the backups are extra lens examples pulled out of the middle of
-that march, not a different argument. `talk.tex` and `build_pptx.py` were **not** reordered and
-still present the original single-pass, 36-slide chronological structure described below — a
-deliberate exception to the "keep all three in sync" rule for the two archival formats, since
-they're meant as the full-length record rather than a timed presentation path. If the 30-minute
-cut changes, update `index.html`'s ordering; the `.tex`/`.pptx` chronological structure doesn't
-need to follow.
+`index.html` (the web deck), `talk.tex`, and `build_pptx.py` all present the same single,
+chronological 36-slide line, start to finish — no essential-path/backup split. (An earlier
+version of `index.html` was reordered into a 30-minute essential path plus a "Backup Slides"
+tail for a specific timed slot; it's since been folded back into one line so the talk is easy to
+reuse elsewhere, and now matches the archival `.tex`/`.pptx` structure exactly. See "Exception —
+presentation-order reordering" in `AGENTS.md` if a future occasion calls for trimming
+`index.html` into a timed path again — the archival editions aren't required to follow.)
 
 Right before the closing QR bookend, all three editions carry a "Selected Related Work" slide —
 a short, curated (not exhaustive) list of George's own recent books and AI/computer-vision/
 energy-efficient-computing papers, sorted newest-first, with no co-author names (the full list
 with full author credit lives at [cv.gkt.sh/publications](https://cv.gkt.sh/publications/),
-linked at the bottom of the slide). This is content, not reordering, so it's present — and kept
-in sync — across all three formats, unlike the timed-path/backup split above.
+linked at the bottom of the slide). It's present — and kept in sync — across all three formats.
 
-The chronological argument (as `talk.tex`/`build_pptx.py` present it, and as `index.html`
-presents it internally within each of its two segments) runs in three acts, with the QR "Follow
-Along" bookends sitting right after the title slide and again at the very close (frame/slide
-comments "1B" and "32" in `talk.tex`/`build_pptx.py`) — like the title slide, outside the
-numbered content sequence and carrying no page number:
+The chronological argument (identical across all three editions) runs in three acts, with the QR
+"Follow Along" bookends sitting right after the title slide and again at the very close (slide
+comments "1B" and "32") — like the title slide, outside the numbered content sequence and
+carrying no page number:
 
 1. **We Already Had Our Singularity** (slides 1–4) — CHOC's core thesis and the Faustian-Turing
    motif from the conclusion, planted here and resolved at the close.
-2. **Six Lenses, One Continuous Argument** (slides 5–28) — a chronological march through CHOC,
-   each slide tagged to the automation / agency / accountability / access / labor /
-   environmental-cost lens it best evidences. Includes two augmentation-focused slides added
-   deliberately so AI doesn't read as CHOC's destination: "computation gets a definition" (the
-   Turing machine) and the memex/World Brain throughline — CHOC's own strongest evidence that
-   augmentation of human capability predates AI by 80 years and doesn't need it. One slide is
-   marked explicitly as the speaker's own voice — not book evidence — bridging to present-day
-   generative/agentic AI via the `introcs-python-ai` course motivation reading, deliberately
-   framed as one item in a long list rather than the list's culmination.
-3. **Directing the Disruption** (slides 29–33) — resolves the Faustian-Turing motif, names
+2. **Six Lenses, One Continuous Argument** (slides 5–26) — a chronological march through CHOC,
+   two slides per chapter where CHOC offers one, each tagged to the automation / agency /
+   accountability / access / labor / environmental-cost lens it best evidences. Includes two
+   augmentation-focused slides added deliberately so AI doesn't read as CHOC's destination:
+   "computation gets a definition" (the Turing machine) and the memex/World Brain throughline —
+   CHOC's own strongest evidence that augmentation of human capability predates AI by 80 years
+   and doesn't need it. The closing slide of the act is marked explicitly as the speaker's own
+   voice — not book evidence — bridging to present-day generative/agentic AI via the
+   `introcs-python-ai` course motivation reading, deliberately framed as one item in a long list
+   rather than the list's culmination.
+3. **Directing the Disruption** (slides 27–32) — resolves the Faustian-Turing motif, names
    CHOC's explicit 2020 endpoint as a hand-off to the talk, and closes on the talk abstract's own
    final line.
-
-In `index.html`'s reordered 30-minute path, Act 2 is trimmed to one strong example per lens
-(Leibniz, Lovelace, the ENIAC women, the Turing machine, UNIVAC, Hopper, the Mac/supercomputer
-pairing, the memex, and the pre-AI deep-learning slide) plus the bridge slide into Act 3; the
-remaining Act 2 examples (access under scribal elites, the Babbage tables crisis, census
-overload, gutta-percha/cables, PDP-8/Engelbart, Altair, Walkman, Mosaic, browser wars,
-WikiLeaks/NSA, iPhone, global divergence, cloud infrastructure) are the 13 backups. Acts 1 and 3, plus both QR bookends, are kept whole in
-the essential path — they're short and each slide resolves or sets up something else (or, for the
-QR slides, does useful work regardless of how much time is left), so cutting into them saves
-little time for a large cost.
 
 **On AI's role in the deck:** CHOC ends in 2020 and never discusses generative or agentic AI.
 Most historical slides make their point without mentioning AI at all; AI appears on-slide only in
