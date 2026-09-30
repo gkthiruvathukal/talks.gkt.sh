@@ -43,7 +43,12 @@ zipped up, or split into its own repo without touching anything else.
 ## Light/dark theming (`theme.js`)
 
 - One shared script, loaded by both the landing page and every deck
-  (`<script src="../theme.js">` from inside a deck directory).
+  (`<script src="../theme.js?v=N">` from inside a deck directory).
+  GitHub Pages serves `theme.js` with `Cache-Control: max-age=600`, so a
+  plain reload can keep serving a stale copy for up to 10 minutes after
+  a deploy — bump the `?v=N` query param (in every page that loads it)
+  whenever `theme.js` changes, so browsers are forced to fetch the new
+  version immediately instead of silently masking the fix.
 - Stores an explicit user choice in `localStorage` under `gkt-theme`
   (`"light"` | `"dark"`); with no explicit choice it defaults to
   `"dark"`. OS-level `prefers-color-scheme` is deliberately **not**
