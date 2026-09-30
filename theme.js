@@ -32,10 +32,28 @@
 		return root.getAttribute("data-theme") === "light" ? "light" : "dark";
 	}
 
+	// WebKit (iOS Safari, and iOS Edge which is WebKit under the hood too) has
+	// been seen picking up `color-scheme` on a toggled [data-theme] attribute
+	// immediately (native chrome recolors) while failing to repaint elements
+	// whose background/color come from the custom properties that same
+	// attribute change cascades — notably reveal.js's slide canvas, which
+	// sits inside a transformed/contained subtree. A synchronous
+	// display:none/reflow/restore forces a full repaint of the whole page as
+	// a blunt but reliable workaround; it happens within one JS task, before
+	// the browser's next paint, so nothing actually flashes on screen.
+	function forceRepaint() {
+		var body = document.body;
+		var prevDisplay = body.style.display;
+		body.style.display = "none";
+		void body.offsetHeight;
+		body.style.display = prevDisplay;
+	}
+
 	function resync() {
 		if (window.Reveal && typeof window.Reveal.sync === "function") {
 			window.Reveal.sync();
 		}
+		forceRepaint();
 	}
 
 	function mount() {
