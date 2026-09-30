@@ -11,7 +11,6 @@ reveal.js deck per talk, each living in its own top-level directory.
 ```
 talks.gkt.sh/
 ├── index.html                    # landing page (card grid of talks)
-├── theme.js                      # shared light/dark toggle, loaded by every page
 ├── CNAME                         # GitHub Pages custom domain
 └── luc-digital-ethics-2026/      # one talk = one self-contained deck
     ├── index.html                #   the deck itself (markdown slides inline)
@@ -38,37 +37,18 @@ zipped up, or split into its own repo without touching anything else.
 - To add a new talk: create its top-level deck directory (see below),
   then add one `.entry` block to `.cards` in `index.html` linking to
   `<deck-dir>/`.
-- Loads `theme.js` for the light/dark toggle (see next section).
 
-## Light/dark theming (`theme.js`)
+## Color scheme
 
-- One shared script, loaded by both the landing page and every deck
-  (`<script src="../theme.js?v=N">` from inside a deck directory).
-  GitHub Pages serves `theme.js` with `Cache-Control: max-age=600`, so a
-  plain reload can keep serving a stale copy for up to 10 minutes after
-  a deploy — bump the `?v=N` query param (in every page that loads it)
-  whenever `theme.js` changes, so browsers are forced to fetch the new
-  version immediately instead of silently masking the fix.
-- Stores an explicit user choice in `localStorage` under `gkt-theme`
-  (`"light"` | `"dark"`); with no explicit choice it defaults to
-  `"dark"`. OS-level `prefers-color-scheme` is deliberately **not**
-  consulted anywhere — mobile browsers (iOS Safari, Edge) were seen
-  applying it inconsistently on the deck, so the toggle is the sole
-  source of truth on every platform.
-- Since the landing page and every deck are served from the same
-  origin, a theme choice made anywhere applies everywhere.
-- Mounts a floating circular toggle button (`.gkt-theme-toggle`) and
-  sets `data-theme` on `<html>` (always `"light"` or `"dark"`, never
-  absent), which pages key their CSS custom properties off of. Also
-  calls `Reveal.sync()` after a toggle so an open deck re-renders
-  immediately.
-- Each page defines its own `--bg`, `--ink`, `--accent`, etc. as CSS
-  custom properties under `:root` (the default theme — light for the
-  landing page, dark for a deck) plus a `:root[data-theme="..."]`
-  override for the other theme — `theme.js` only flips the attribute,
-  it doesn't own the palette. Each also sets `color-scheme` under both
-  blocks so native form/scrollbar rendering follows the same explicit
-  choice rather than the OS setting.
+Each page has one fixed palette, hardcoded as CSS custom properties
+under `:root` — light for the landing page, dark for a deck (matching
+reveal.js's "black" theme). There is no light/dark toggle and no
+dependency on OS `prefers-color-scheme`; a `theme.js`-based toggle was
+tried and removed after it proved unreliable on iOS Safari/Edge (the
+`data-theme`-driven custom properties never repainted on those
+browsers even though the JS and native chrome responded correctly —
+root cause never pinned down). Keep it simple: if a deck wants a
+different look, change its `:root` values directly.
 
 ## How a deck is built (reveal.js, markdown-in-HTML)
 
@@ -88,9 +68,9 @@ Each deck is a single `index.html` using [reveal.js](https://revealjs.com):
 - **Speaker notes** live under `Note:` in the same slide and are shown
   via the Notes plugin (press <kbd>S</kbd>) — used here to carry
   sourcing/argument detail that doesn't belong on-slide.
-- **Styling**: a `<style>` block in `<head>` defines the deck's color
-  palette as CSS custom properties (dark-first, with a light override),
-  plus small helper classes used throughout the markdown
+- **Styling**: a `<style>` block in `<head>` defines the deck's fixed
+  dark color palette as CSS custom properties, plus small helper
+  classes used throughout the markdown
   (`.lead`, `.chapter-tag`, `.cols`, `.small`, `img.shot`, etc.).
   Swap `--accent`/`--accent2` to retheme a deck without touching slide
   content.
@@ -138,10 +118,9 @@ cd luc-digital-ethics-2026
 It's a thin wrapper around `python3 -m http.server`, bound to
 `localhost` and rooted at the deck's own directory (not the repo
 root) — this matters because the deck references `reveal/` and
-`images/` with paths relative to itself, and `../theme.js` relative to
-the repo root one level up. Serving from the wrong directory breaks
-those relative paths. Requires `python3` on `PATH`; no other tooling
-or install step is needed.
+`images/` with paths relative to itself. Serving from the wrong
+directory breaks those relative paths. Requires `python3` on `PATH`;
+no other tooling or install step is needed.
 
 Useful keys once the deck is open: <kbd>S</kbd> speaker view/notes,
 <kbd>Esc</kbd>/<kbd>O</kbd> overview map, <kbd>F</kbd> fullscreen,
@@ -183,9 +162,8 @@ and note the source and copy date in that deck's README.
   and any known gaps.
 - Give every deck its own `serve.sh` (copy the existing one verbatim —
   it's generic, not talk-specific).
-- Reuse `../theme.js` rather than duplicating the toggle logic; add
-  new CSS custom properties to a deck's palette instead of hardcoding
-  colors so the light/dark toggle keeps working.
+- Define the deck's palette as CSS custom properties under `:root`
+  (see "Color scheme" above) rather than hardcoding colors inline.
 
 ## Git commits: no AI co-author trailer
 

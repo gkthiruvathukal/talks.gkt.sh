@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>George K. Thiruvathukal — Talks</title>
-<script src="theme.js?v=2"></script>
 <style>
 	:root {
 		color-scheme: light;
@@ -16,21 +15,6 @@
 		--shadow:  0 1px 2px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06);
 		--shadow-hover: 0 2px 4px rgba(0,0,0,0.06), 0 16px 32px rgba(0,0,0,0.10);
 		--accent:  #b8862f;
-	}
-	/* data-theme is always set explicitly by theme.js (default "dark") — OS-level
-	   prefers-color-scheme is deliberately not consulted, so there is no bare
-	   dark default here the way the decks have; light above is the fallback
-	   only until theme.js's inline apply() runs. */
-	:root[data-theme="dark"] {
-		color-scheme: dark;
-		--bg:      #14161a;
-		--ink:     #e8e6e1;
-		--muted:   #93999f;
-		--card-bg: #1c1f24;
-		--border:  #2a2e34;
-		--shadow:  0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.4);
-		--shadow-hover: 0 2px 4px rgba(0,0,0,0.35), 0 16px 32px rgba(0,0,0,0.5);
-		--accent:  #d9a441;
 	}
 	* { box-sizing: border-box; }
 	body {
@@ -103,30 +87,6 @@
 	.entry__event:hover, .entry__event:focus-visible {
 		color: var(--accent);
 		text-decoration-color: var(--accent);
-	}
-	.gkt-theme-toggle {
-		position: fixed;
-		top: 1em;
-		right: 1em;
-		width: 2.4em;
-		height: 2.4em;
-		border-radius: 50%;
-		border: 1px solid var(--border);
-		background: var(--card-bg);
-		color: var(--ink);
-		font-size: 1em;
-		line-height: 1;
-		cursor: pointer;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		box-shadow: var(--shadow);
-		transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
-	}
-	.gkt-theme-toggle:hover, .gkt-theme-toggle:focus-visible {
-		transform: translateY(-2px);
-		box-shadow: var(--shadow-hover);
-		border-color: var(--accent);
 	}
 </style>
 </head>

@@ -5,21 +5,13 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<title>From Disruption to Agency: AI, Computing Cultures, and the Future of Digital Ethics</title>
 
-	<!-- Shared light/dark toggle (talks.gkt.sh/theme.js) — loaded early, before the reveal
-	     stylesheets, so the saved/system theme is applied before first paint. -->
-	<script src="../theme.js?v=2"></script>
-
 	<!-- reveal.js — vendored locally (talks/2026-digital-ethics-singularity/reveal/) so the deck is
 	     fully self-contained: nothing is fetched from the network at present time. -->
 	<link rel="stylesheet" href="reveal/dist/reveal.css">
 	<link rel="stylesheet" href="reveal/dist/theme/black.css" id="theme">
 
 	<style>
-		/* Dark is the deck's native palette and its default — data-theme is always set
-		   explicitly by theme.js (default "dark"), so OS-level prefers-color-scheme is
-		   deliberately not consulted here; :root just carries the dark values as the
-		   fallback until theme.js's inline apply() runs, with light as the sole,
-		   explicit override below. */
+		/* Dark is the deck's one, fixed palette — matches reveal.js's "black" theme. */
 		:root {
 			color-scheme: dark;
 			--accent:      #d9a441; /* warm amber — headings */
@@ -37,22 +29,6 @@
 			--r-main-color: var(--ink);
 			--r-link-color: #42affa;
 			--r-link-color-hover: #8dcffc;
-		}
-		:root[data-theme="light"] {
-			color-scheme: light;
-			--accent:      #b8862f;
-			--accent2:     #3f7a52;
-			--bg:          #f5f4f1;
-			--ink:         #1c1c1c;
-			--strong:      #000000;
-			--muted:       #6b6b6b;
-			--border-soft: #e1ded7;
-			--border-img:  #e1ded7;
-			--img-bg:      #f0ede6;
-			--img-shadow:  rgba(0,0,0,0.15);
-			--blockquote-bg: rgba(184,134,47,0.12);
-			--r-link-color: #1a63b8;
-			--r-link-color-hover: #4a8fd1;
 		}
 		body { background: var(--bg); }
 		.reveal              { font-size: 30px; color: var(--ink); }
@@ -106,31 +82,6 @@
 			display: block; width: 220px; height: 220px;
 			background: #ffffff; padding: 12px; border-radius: 10px;
 			border: 1px solid var(--border-img); box-shadow: 0 8px 40px var(--img-shadow);
-		}
-
-		.gkt-theme-toggle {
-			position: fixed;
-			top: 0.6em;
-			right: 0.6em;
-			width: 2.2em;
-			height: 2.2em;
-			border-radius: 50%;
-			border: 1px solid var(--border-soft);
-			background: var(--bg);
-			color: var(--ink);
-			font-size: 16px;
-			line-height: 1;
-			cursor: pointer;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			z-index: 300;
-			box-shadow: 0 2px 10px var(--img-shadow);
-			transition: transform 0.15s ease, border-color 0.15s ease;
-		}
-		.gkt-theme-toggle:hover, .gkt-theme-toggle:focus-visible {
-			transform: translateY(-2px);
-			border-color: var(--accent);
 		}
 	</style>
 </head>
